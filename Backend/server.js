@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const path = require("path");
 const connectDB = require("./config/db");
 
 // Load environment variables
@@ -15,9 +16,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve uploaded files statically
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/interviews", require("./routes/interviewRoutes"));    
+
+// Podcast routes
+app.use("/api/podcasts", require("./routes/podcastRoutes"));
 
 // Test Route
 app.get("/", (req, res) => {
