@@ -5,8 +5,10 @@ import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignInAlt } from "react-icons/fa";
 import axios from "axios";
+import {useAuth} from "../../context/AuthProvider"
 
 export default function Login() {
+  const { login } = useAuth();
   const [form, setForm] = useState({ email: "", password: "", remember: false });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -45,10 +47,12 @@ export default function Login() {
         });
 
         // save JWT token
-        localStorage.setItem("token", res.data.token);
-
+      //   localStorage.setItem("token", res.data.token);
+      //   localStorage.setItem("role", res.data.role);
+      // localStorage.setItem("name", res.data.name);
+       login(res.data.name, res.data.role, res.data.token);
         // redirect
-        navigate("/dashboard");
+        navigate(`/${res.data.role}-dashboard`);
       } catch (err) {
         console.error(err);
         alert(

@@ -49,7 +49,7 @@ function FilterSidebar() {
             </button>
             {openRole === "student" && (
               <ul className="ml-6 mt-2 space-y-2 text-sm text-gray-300">
-                <li><Link to="/student/dashboard" onClick={toggleSidebar}>Dashboard</Link></li>
+                <li><Link to="/student/student-dashboard" onClick={toggleSidebar}>Dashboard</Link></li>
                 <li><Link to="/student/alumni-directory" onClick={toggleSidebar}>Alumni Directory</Link></li>
                 <li><Link to="/student/job-referrals" onClick={toggleSidebar}>Job Referrals</Link></li>
                 <li><Link to="/student/interview-experiences" onClick={toggleSidebar}>Interview Experiences</Link></li>

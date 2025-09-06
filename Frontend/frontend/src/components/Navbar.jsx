@@ -5,6 +5,7 @@ import {
   FaSun,
   FaUsers,
   FaPodcast,
+  FaSignOutAlt,
   FaHome,
   FaUserTie,
   FaInfoCircle,
@@ -26,7 +27,7 @@ import { useAuth } from "../context/AuthProvider";
 
 function Navbar() {
   const { darkMode, setDarkMode } = useTheme();
-  const { user } = useAuth();
+  const { user,logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
   // ================= Public Links =================
@@ -42,7 +43,7 @@ function Navbar() {
 
   // ================= Student Links =================
   const studentLinks = [
-    { to: "/student/dashboard", label: "Dashboard", icon: <FaHome /> },
+    { to: "/student/student-dashboard", label: "Dashboard", icon: <FaHome /> },
     { to: "/student/alumni-directory", label: "Alumni Directory", icon: <FaUsers /> },
     { to: "/student/job-referrals", label: "Job Referrals", icon: <FaBriefcase /> },
     { to: "/student/interview-experiences", label: "Interview Experiences", icon: <FaUserTie /> },
@@ -50,8 +51,9 @@ function Navbar() {
     { to: "/student/resource-bank", label: "Resources", icon: <FaBook /> },
     { to: "/student/company-reviews", label: "Company Reviews", icon: <FaBuilding /> },
     { to: "/student/chat-alumni", label: "Chat Alumni", icon: <FaComments /> },
-    { to: "/student/mock-interview-scheduler", label: "Mock Interviews", icon: <FaCalendarCheck /> },
+    { to: "/student/mock-interviews", label: "Mock Interviews", icon: <FaCalendarCheck /> },
     { to: "/student/text-to-speech", label: "Text to Speech", icon: <FaHeadphones /> },
+    { to: "/student/create-interview", label: "Create Interview", icon: <FaCalendarCheck /> },
   ];
 
   // ================= Alumni Links =================
@@ -152,6 +154,14 @@ function Navbar() {
             {darkMode ? <FaSun className="text-yellow-400" /> : <FaMoon />}
           </button>
         </div>
+      )}
+       {user && (
+        <button
+          onClick={logout}
+          className="flex items-center gap-2 px-3 py-1 rounded-lg bg-red-600 text-white hover:bg-red-500"
+        >
+          <FaSignOutAlt /> Logout
+        </button>
       )}
     </nav>
   );

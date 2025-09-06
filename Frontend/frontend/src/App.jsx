@@ -34,7 +34,7 @@ import ChatAlumni from "./pages/Student/ChatAlumni";
 import SuccessStories from "./pages/Student/SuccessStories";
 import ResourceBank from "./pages/Student/ResourceBank";
 import StudentAlumniProfile from "./pages/Student/StudentAlumniProfile";
-
+import CreateInterview from "./pages/createInterview";
 //Alumni Pages<Route
 
 import PostReview from "./pages/Alumni/PostReview";
@@ -91,7 +91,7 @@ function App() {
               <Route path="/admin/user-management" element={<UserManagement />} />
 
               {/* Student Routes */}
-              <Route path="/student/dashboard" element={<StudentDashboard />} />
+              <Route path="/student/student-dashboard" element={<StudentDashboard />} />
               <Route path="/student/alumni-directory" element={<AlumniDirectory />} />
               <Route path="/student/job-referrals" element={<JobReferrals />} />
               <Route path="/student/alumni/:id" element={<StudentAlumniProfile />} />
@@ -101,7 +101,7 @@ function App() {
               <Route path="/student/chat-alumni" element={<ChatAlumni />} />
               <Route path="/student/success-stories" element={<SuccessStories />} />
               <Route path="/student/resource-bank" element={<ResourceBank />} />
-
+              <Route path="/student/create-interview" element={<CreateInterview />} />
 
 
               {/* Alumni Routes */}
