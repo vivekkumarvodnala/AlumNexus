@@ -1,0 +1,23 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* small helper defaults */
+:root {
+  --bg: #F9FAFB;
+  --primary: #0D9488;
+  --secondary: #8B5CF6;
+  --accent: #1F2937;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--accent);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
