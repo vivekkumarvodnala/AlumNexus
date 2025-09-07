@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import FilterSidebar from "./components/FilterSidebar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Pages
 import Home from "./pages/Home";
@@ -23,7 +25,6 @@ import RoleConversion from "./pages/Admin/RoleConversion";
 import UserManagement from "./pages/Admin/UserManagement";
 
 // Student Pages
-
 import StudentDashboard from "./pages/Student/StudentDashboard";
 import AlumniDirectory from "./pages/Student/AlumniDirectory";
 import JobReferrals from "./pages/Student/JobReferrals";
@@ -34,10 +35,11 @@ import ChatAlumni from "./pages/Student/ChatAlumni";
 import SuccessStories from "./pages/Student/SuccessStories";
 import ResourceBank from "./pages/Student/ResourceBank";
 import StudentAlumniProfile from "./pages/Student/StudentAlumniProfile";
-import CreateInterview from "./pages/createInterview";
+
 //Alumni Pages<Route
 
 import PostReview from "./pages/Alumni/PostReview";
+import UploadPodcast from "./pages/Alumni/UploadPodcast";
 import AlumniDashboard from "./pages/Alumni/AlumniDashboard";
 import AlumniProfile from "./pages/Alumni/AlumniProfile";
 import ManageProfile from "./pages/Alumni/ManageProfile";
@@ -48,7 +50,6 @@ import PostStory from "./pages/Alumni/PostStory";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (darkMode) {
@@ -83,7 +84,6 @@ function App() {
               <Route path="/register" element={<Register />} />
 
               {/* Admin Routes */}
-
               <Route path="/admin/analytics-dashboard" element={<AnalyticsDashboard />} />
               <Route path="/admin/content-moderation" element={<ContentModeration />} />
               <Route path="/admin/admin-dashboard" element={<AdminDashboard />} />
@@ -101,11 +101,12 @@ function App() {
               <Route path="/student/chat-alumni" element={<ChatAlumni />} />
               <Route path="/student/success-stories" element={<SuccessStories />} />
               <Route path="/student/resource-bank" element={<ResourceBank />} />
-              <Route path="/student/create-interview" element={<CreateInterview />} />
+
 
 
               {/* Alumni Routes */}
               <Route path="/alumni/post-review" element={<PostReview />} />
+              <Route path="/alumni/upload-podcast" element={<UploadPodcast />} />
               <Route path="/alumni/alumni-dashboard" element={<AlumniDashboard />} />
               <Route path="/alumni/alumni-profile-page" element={<AlumniProfile />}/>
               <Route path="/alumni/manage-profile" element={<ManageProfile />} />
@@ -120,6 +121,9 @@ function App() {
         {/* Footer */}
         <Footer />
       </div>
+
+      {/* Toast container (keep inside Router) */}
+      <ToastContainer position="top-right" autoClose={3000} />
     </Router>
   );
 }
