@@ -19,25 +19,36 @@ export const AuthProvider = ({ children }) => {
 
   // no need for loading flicker anymore
   useEffect(() => {
-    if (storedToken && storedName && storedRole) {
-      setUser({ name: storedName, role: storedRole });
+    const storedId = localStorage.getItem("id");
+    const storedToken = localStorage.getItem("token");
+    const storedName = localStorage.getItem("name");
+    const storedRole = localStorage.getItem("role");
+
+    if (storedId && storedToken && storedName && storedRole) {
+      setUser({ id: storedId, name: storedName, role: storedRole });
       setToken(storedToken);
     }
   }, []);
 
-  const login = (name, role, token) => {
-    setUser({ name, role });
+  // Login
+  const login = (id, name, role, token) => {
+    const userData = { id, name, role };
+    setUser(userData);
     setToken(token);
 
+    localStorage.setItem("id", id);
     localStorage.setItem("name", name);
     localStorage.setItem("role", role);
     localStorage.setItem("token", token);
   };
 
+
+  // Logout
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("id");
     localStorage.removeItem("name");
     localStorage.removeItem("role");
+    localStorage.removeItem("token");
     setUser(null);
     setToken(null);
   };

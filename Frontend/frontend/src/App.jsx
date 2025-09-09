@@ -37,7 +37,7 @@ import StudentAlumniProfile from "./pages/Student/StudentAlumniProfile";
 import MyBookings from "./pages/Student/MyBookings"
 import ReferralList from "./pages/Student/ReferralList"
 //Alumni Pages<Route
-
+import MyPodcasts from "./pages/Alumni/MyPodcasts";
 import PostReview from "./pages/Alumni/PostReview";
 import UploadPodcast from "./pages/Alumni/UploadPodcast";
 import AlumniDashboard from "./pages/Alumni/AlumniDashboard";
@@ -110,6 +110,7 @@ function App() {
 
 
               {/* Alumni Routes */}
+              <Route path="/alumni/my-podcasts" element={<MyPodcasts />} />
               <Route path="/alumni/post-review" element={<PostReview />} />
               <Route path="/alumni/upload-podcast" element={<UploadPodcast />} />
               <Route path="/alumni/alumni-dashboard" element={<AlumniDashboard />} />

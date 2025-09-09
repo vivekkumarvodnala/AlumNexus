@@ -41,8 +41,11 @@ function Navbar() {
 
   // ================= Alumni Links =================
   const alumniLinks = [
-    { to: "/alumni/dashboard", label: "Dashboard", icon: <FaHome /> },
-    // { to: "/alumni/manage-profile", label: "Manage Profile", icon: <FaUserTie /> },
+
+    { to: "/alumni/my-podcasts", label: "MyPodcasts", icon: <FaCheckCircle /> },
+    { to: "/alumni/alumni-dashboard", label: "Dashboard", icon: <FaHome /> },
+    { to: "/alumni/upload-podcast", label: "CreatePodcats", icon: <FaBook /> },
+    { to: "/alumni/manage-profile", label: "Manage Profile", icon: <FaUserTie /> },
     { to: "/alumni/post-referral", label: "Post Referral", icon: <FaBriefcase /> },
     { to: "/alumni/post-experience", label: "Post Experience", icon: <FaUserTie /> },
     { to: "/alumni/post-story", label: "Post Story", icon: <FaCheckCircle /> },
