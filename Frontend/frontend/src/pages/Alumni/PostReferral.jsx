@@ -10,8 +10,13 @@ import {
   FaFileUpload,
 } from "react-icons/fa";
 import axios from "axios";
+import {useAuth} from "../../context/AuthProvider";
 
 export default function PostReferral() {
+  const {user} = useAuth();
+  if(!user || user.role !== "alumni") {
+    return <p className="text-center text-red-500">Access Denied. Alumni only.</p>;
+  }
   const [referral, setReferral] = useState({
     company: "",
     role: "",
@@ -36,9 +41,10 @@ export default function PostReferral() {
       const formData = new FormData();
       Object.entries(referral).forEach(([k, v]) => formData.append(k, v));
       if (file) formData.append("file", file);
-
+      console.log(localStorage.getItem("token"));
       await axios.post("http://localhost:5000/api/referrals", formData, {
         headers: { "Content-Type": "multipart/form-data" },
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
       });
 
       alert("Referral posted successfully!");

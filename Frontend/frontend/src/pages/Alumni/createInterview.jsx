@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useTheme } from "../context/ThemeProvider";
+import { useTheme } from "../../context/ThemeProvider";
 
 export default function CreateInterview() {
   const [form, setForm] = useState({

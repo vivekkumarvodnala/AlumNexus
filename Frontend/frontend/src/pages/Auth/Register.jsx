@@ -47,6 +47,7 @@ export default function Register() {
           email: form.email,
           password: form.password,
           role: form.role,
+          phone: form.phone
         });
 
         console.log("Register success:", res.data);
@@ -122,6 +123,17 @@ export default function Register() {
           onChange={handleChange}
           placeholder="Repeat password"
           error={errors.confirm}
+          icon={Lock}
+        />
+
+          <Input
+          id="phone"
+          label="Mobile Number"
+          type="number"
+          value={form.phone}
+          onChange={handleChange}
+          placeholder="enter number"
+          error={errors.phone}
           icon={Lock}
         />
 

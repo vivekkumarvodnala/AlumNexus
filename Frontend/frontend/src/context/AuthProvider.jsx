@@ -1,27 +1,30 @@
-// src/context/AuthProvider.jsx
+// src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
-
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const storedToken = localStorage.getItem("token");
+  const storedName = localStorage.getItem("name");
+  const storedRole = localStorage.getItem("role");
 
-  // Load from localStorage on refresh
+  // initialize immediately from localStorage
+  const [user, setUser] = useState(
+    storedToken && storedName && storedRole
+      ? { name: storedName, role: storedRole }
+      : null
+  );
+  const [token, setToken] = useState(storedToken || null);
+
+  // no need for loading flicker anymore
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    const storedName = localStorage.getItem("name");
-    const storedRole = localStorage.getItem("role");
-
     if (storedToken && storedName && storedRole) {
       setUser({ name: storedName, role: storedRole });
       setToken(storedToken);
     }
   }, []);
 
-  // Login
   const login = (name, role, token) => {
     setUser({ name, role });
     setToken(token);
@@ -31,14 +34,13 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("token", token);
   };
 
-  // Logout
-      const logout = () => {
+  const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("name");
     localStorage.removeItem("role");
     setUser(null);
+    setToken(null);
   };
-
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>

@@ -50,7 +50,7 @@ export default function Login() {
       //   localStorage.setItem("token", res.data.token);
       //   localStorage.setItem("role", res.data.role);
       // localStorage.setItem("name", res.data.name);
-       login(res.data.name, res.data.role, res.data.token);
+       login(res.data.name, res.data.role, res.data.token,res.data._id);
         // redirect
         navigate(`/${res.data.role}-dashboard`);
       } catch (err) {

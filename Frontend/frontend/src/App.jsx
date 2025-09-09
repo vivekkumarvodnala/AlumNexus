@@ -29,13 +29,13 @@ import StudentDashboard from "./pages/Student/StudentDashboard";
 import AlumniDirectory from "./pages/Student/AlumniDirectory";
 import JobReferrals from "./pages/Student/JobReferrals";
 import InterviewExperiences from "./pages/Student/InterviewExperiences";
-import MockInterviewScheduler from "./pages/Student/MockInterviewScheduler";
 import CompanyReviews from "./pages/Student/CompanyReviews";
 import ChatAlumni from "./pages/Student/ChatAlumni";
 import SuccessStories from "./pages/Student/SuccessStories";
 import ResourceBank from "./pages/Student/ResourceBank";
 import StudentAlumniProfile from "./pages/Student/StudentAlumniProfile";
-
+import MyBookings from "./pages/Student/MyBookings"
+import ReferralList from "./pages/Student/ReferralList"
 //Alumni Pages<Route
 
 import PostReview from "./pages/Alumni/PostReview";
@@ -47,6 +47,8 @@ import PostExperience from "./pages/Alumni/PostExperience";
 import PostReferral from "./pages/Alumni/PostReferral";
 import PostResource from "./pages/Alumni/PostResource";
 import PostStory from "./pages/Alumni/PostStory";
+import CreateInterview from "./pages/Alumni/createInterview";
+import MySlots from "./pages/Alumni/MySlots"
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -96,12 +98,15 @@ function App() {
               <Route path="/student/job-referrals" element={<JobReferrals />} />
               <Route path="/student/alumni/:id" element={<StudentAlumniProfile />} />
               <Route path="/student/interview-experiences" element={<InterviewExperiences />} />
-              <Route path="/student/mock-interviews" element={<MockInterviewScheduler />} />
+              <Route path="/student/mock-interviews" element={<MockInterviews />} />
               <Route path="/student/company-reviews" element={<CompanyReviews />} /> 
               <Route path="/student/chat-alumni" element={<ChatAlumni />} />
               <Route path="/student/success-stories" element={<SuccessStories />} />
               <Route path="/student/resource-bank" element={<ResourceBank />} />
+               <Route path="/student/my-bookings" element={<MyBookings />} />
+               <Route path="/student/referrals" element={<ReferralList />} />
 
+              
 
 
               {/* Alumni Routes */}
@@ -114,6 +119,8 @@ function App() {
               <Route path="/alumni/post-referral" element={<PostReferral />} />
               <Route path="/alumni/post-resource" element={<PostResource />} />
               <Route path="/alumni/post-story" element={<PostStory />} />
+              <Route path="/alumni/create-interview" element={<CreateInterview />} />
+               <Route path="/alumni/my-slots" element={<MySlots />} />
             </Routes>
           </main>
         </div>

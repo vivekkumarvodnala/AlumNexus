@@ -250,3 +250,81 @@ export default function StudentDashboard() {
     </div>
   );
 }
+
+// Student/StudentDashboard.jsx
+// import React from "react";
+// import {
+//   FaUser,
+//   FaCalendarCheck,
+//   FaComments,
+//   FaBook,
+//   FaClipboardList,
+//   FaChalkboardTeacher,
+// } from "react-icons/fa";
+
+// export default function StudentDashboard() {
+//   const cards = [
+//     {
+//       title: "Manage Profile",
+//       icon: <FaUser />,
+//       accent: "text-[#0D9488]",
+//     },
+//     {
+//       title: "Browse Mock Interviews",
+//       icon: <FaChalkboardTeacher />,
+//       accent: "text-[#8B5CF6]",
+//     },
+//     {
+//       title: "My Bookings",
+//       icon: <FaCalendarCheck />,
+//       accent: "text-[#0D9488]",
+//     },
+//     {
+//       title: "Ask a Doubt",
+//       icon: <FaComments />,
+//       accent: "text-[#8B5CF6]",
+//     },
+//     {
+//       title: "View Resources",
+//       icon: <FaBook />,
+//       accent: "text-[#0D9488]",
+//     },
+//     {
+//       title: "Write Feedback",
+//       icon: <FaClipboardList />,
+//       accent: "text-[#8B5CF6]",
+//     },
+//   ];
+
+//   return (
+//     <div
+//       className={`p-6 rounded-2xl border transition-colors duration-300 
+//         bg-[#F9FAFB] text-[#1F2937] border-gray-200 
+//         dark:bg-[#1F2937] dark:text-gray-100 dark:border-gray-700`}
+//     >
+//       <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
+//         🎓{" "}
+//         <span className="text-[#8B5CF6] dark:text-[#0D9488]">
+//           Student Dashboard
+//         </span>
+//       </h2>
+//       <p className="mb-6 text-gray-600 dark:text-gray-400">
+//         Quick access to student tools and actions.
+//       </p>
+
+//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+//         {cards.map((card, idx) => (
+//           <div
+//             key={idx}
+//             className={`p-6 rounded-xl flex flex-col items-center justify-center gap-3 
+//         transition hover:scale-105 cursor-pointer 
+//         bg-white dark:bg-gray-800 shadow-lg dark:shadow-xl`}
+//           >
+//             <div className={`text-3xl ${card.accent}`}>{card.icon}</div>
+//             <p className="font-medium">{card.title}</p>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }

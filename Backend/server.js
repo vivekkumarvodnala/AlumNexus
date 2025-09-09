@@ -25,6 +25,8 @@ app.use("/api/interviews", require("./routes/interviewRoutes"));
 
 // Podcast routes
 app.use("/api/podcasts", require("./routes/podcastRoutes"));
+app.use("/api/referrals", require("./routes/referralRoutes"));
+
 
 // Test Route
 app.get("/", (req, res) => {
