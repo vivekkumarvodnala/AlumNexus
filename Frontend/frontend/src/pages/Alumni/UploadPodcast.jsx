@@ -4,16 +4,16 @@ import {
   FaMicrophone,
   FaStop,
   FaUpload,
-  FaUser,
   FaHeading,
   FaAlignLeft,
 } from "react-icons/fa";
+import { useAuth } from "../../context/AuthProvider";
 
 function UploadPodcast() {
+  const { token } = useAuth(); // Use token instead of user.token
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    alumni: "",
     isPublic: true,
   });
   const [audioFile, setAudioFile] = useState(null);
@@ -49,10 +49,7 @@ function UploadPodcast() {
       mediaRecorderRef.current.onstop = () => {
         const blob = new Blob(audioChunks.current, { type: "audio/webm" });
         audioChunks.current = [];
-        const url = URL.createObjectURL(blob);
-        setAudioUrl(url);
-
-        // Convert blob to File
+        setAudioUrl(URL.createObjectURL(blob));
         const file = new File([blob], "recording.webm", { type: "audio/webm" });
         setAudioFile(file);
       };
@@ -79,7 +76,6 @@ function UploadPodcast() {
     const data = new FormData();
     data.append("title", formData.title);
     data.append("description", formData.description);
-    data.append("alumni", formData.alumni);
     data.append("isPublic", formData.isPublic);
     data.append("audio", audioFile);
 
@@ -88,7 +84,10 @@ function UploadPodcast() {
         "http://localhost:5000/api/podcasts/upload",
         data,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            Authorization: `Bearer ${token}`, // send token here
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       setMessage("✅ Podcast uploaded successfully!");
@@ -102,116 +101,80 @@ function UploadPodcast() {
   };
 
   return (
-    
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-8 rounded-2xl shadow-xl max-w-2xl w-full border border-gray-200 dark:border-gray-800 transition-all"
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white p-8 rounded-2xl shadow-xl max-w-2xl w-full border border-gray-200 dark:border-gray-800 transition-all">
+      <h1 className="text-3xl font-bold mb-4 text-center flex items-center justify-center gap-3">
+        <FaMicrophone className="text-teal-600 dark:text-yellow-400" /> Upload Podcast
+      </h1>
+
+      {/* Title */}
+      <label className="mb-1 font-medium flex items-center gap-1">
+        <FaHeading className="text-teal-600 dark:text-yellow-400 hover:text-yellow-300" /> Title
+      </label>
+      <input
+        type="text"
+        name="title"
+        placeholder="Enter podcast title"
+        onChange={handleChange}
+        className="w-full p-3 mb-4 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none dark:bg-gray-800 dark:border-gray-700"
+      />
+
+      {/* Description */}
+      <label className="mb-1 font-medium flex items-center gap-1">
+        <FaAlignLeft className="text-teal-600 dark:text-yellow-400 hover:text-yellow-300" /> Description
+      </label>
+      <textarea
+        name="description"
+        placeholder="Write a short description..."
+        onChange={handleChange}
+        className="w-full p-3 mb-4 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none dark:bg-gray-800 dark:border-gray-700"
+      />
+
+      {/* File Upload */}
+      <label className="mb-1 font-medium flex items-center gap-1">
+        <FaUpload className="text-teal-600 dark:text-yellow-400 hover:text-yellow-300" /> Upload File
+      </label>
+      <input
+        type="file"
+        accept="audio/*"
+        onChange={handleFileChange}
+        className="mb-4 w-full"
+      />
+
+      {/* Recorder */}
+      <button
+        type="button"
+        onClick={isRecording ? stopRecording : startRecording}
+        className={`px-4 py-3 rounded-lg font-medium text-white flex items-center justify-center gap-2 w-full mb-4 shadow-md transition-all duration-200 ${
+          isRecording
+            ? "bg-red-600 hover:bg-red-700"
+            : "bg-teal-600 hover:bg-teal-700 dark:bg-yellow-400 dark:hover:bg-yellow-300"
+        }`}
       >
-        <h1 className="text-3xl font-bold mb-4 text-center flex items-center justify-center gap-3">
-          <FaMicrophone className="text-teal-600 dark:text-yellow-400" />
-          Upload Podcast
-        </h1>
+        {isRecording ? <FaStop /> : <FaMicrophone />}
+        {isRecording ? "Stop Recording" : "Start Recording"}
+      </button>
 
-        {/* Title */}
-        <label className=" mb-1 font-medium flex items-center gap-1">
-          <FaHeading className="text-teal-600 dark:text-yellow-400 hover:text-yellow-300" />
-          Title
-        </label>
-        <input
-          type="text"
-          name="title"
-          placeholder="Enter podcast title"
-          onChange={handleChange}
-          className="w-full p-3 mb-4 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none dark:bg-gray-800 dark:border-gray-700"
-        />
+      {/* Preview */}
+      {audioUrl && (
+        <div className="mb-4">
+          <p className="font-medium mb-1 flex items-center gap-1">
+            <FaMicrophone className="text-teal-600 dark:text-yellow-400 hover:text-yellow-300" /> Preview
+          </p>
+          <audio controls src={audioUrl} className="w-full rounded-lg border dark:border-gray-700"></audio>
+        </div>
+      )}
 
-        {/* Description */}
-        <label className=" mb-1 font-medium flex items-center gap-1">
-          <FaAlignLeft className="text-teal-600 dark:text-yellow-400 hover:text-yellow-300" />
-          Description
-        </label>
-        <textarea
-          name="description"
-          placeholder="Write a short description..."
-          onChange={handleChange}
-          className="w-full p-3 mb-4 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none dark:bg-gray-800 dark:border-gray-700"
-        />
+      {/* Submit */}
+      <button
+        type="submit"
+        className="w-full bg-teal-600 hover:bg-teal-700 dark:bg-yellow-400 dark:hover:bg-yellow-300 text-white py-3 rounded-lg font-semibold shadow-md transition-all duration-200 flex items-center justify-center gap-1"
+      >
+        <FaUpload className="text-white" /> Publish Podcast
+      </button>
 
-        {/* Alumni */}
-        <label className=" mb-1 font-medium flex items-center gap-1">
-          <FaUser className="text-teal-600 dark:text-yellow-400 hover:text-yellow-300" />
-          Alumni
-        </label>
-        <input
-          type="text"
-          name="alumni"
-          placeholder="Alumni name"
-          onChange={handleChange}
-          className="w-full p-3 mb-4 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none dark:bg-gray-800 dark:border-gray-700"
-        />
-
-        {/* Divider */}
-        <div className="border-t border-gray-300 dark:border-gray-700 my-6"></div>
-
-        {/* File Upload */}
-        <label className=" mb-1 font-medium flex items-center gap-1">
-          <FaUpload className="text-teal-600 dark:text-yellow-400 hover:text-yellow-300" />
-          Upload File
-        </label>
-        <input
-          type="file"
-          accept="audio/*"
-          onChange={handleFileChange}
-          className="mb-4 w-full"
-        />
-
-        {/* Recorder */}
-        <label className=" mb-1 font-medium flex items-center gap-1">
-          <FaMicrophone className="text-teal-600 dark:text-yellow-400 hover:text-yellow-300" />
-          Record Audio
-        </label>
-        <button
-          type="button"
-          onClick={isRecording ? stopRecording : startRecording}
-          className={`px-4 py-3 rounded-lg font-medium text-white flex items-center justify-center gap-2 w-full mb-4 shadow-md transition-all duration-200 ${
-            isRecording
-              ? "bg-red-600 hover:bg-red-700"
-              : "bg-teal-600 hover:bg-teal-700 dark:bg-yellow-400 dark:hover:bg-yellow-300"
-          }`}
-        >
-          {isRecording ? <FaStop /> : <FaMicrophone />}
-          {isRecording ? "Stop Recording" : "Start Recording"}
-        </button>
-
-        {/* Preview */}
-        {audioUrl && (
-          <div className="mb-4">
-            <p className="font-medium mb-1 flex items-center gap-1">
-              <FaMicrophone className="text-teal-600 dark:text-yellow-400 hover:text-yellow-300" />
-              Preview
-            </p>
-            <audio
-              controls
-              src={audioUrl}
-              className="w-full rounded-lg border dark:border-gray-700"
-            ></audio>
-          </div>
-        )}
-
-        {/* Submit */}
-        <button
-          type="submit"
-          className="w-full bg-teal-600 hover:bg-teal-700 dark:bg-yellow-400 dark:hover:bg-yellow-300 text-white py-3 rounded-lg font-semibold  shadow-md transition-all duration-200 flex items-center justify-center gap-1"
-        >
-          <FaUpload className="text-white" />
-          Publish Podcast
-        </button>
-
-        {/* Status */}
-        {message && (
-          <p className="mt-4 text-center text-sm font-medium">{message}</p>
-        )}
-      </form>
+      {/* Status */}
+      {message && <p className="mt-4 text-center text-sm font-medium">{message}</p>}
+    </form>
   );
 }
 
