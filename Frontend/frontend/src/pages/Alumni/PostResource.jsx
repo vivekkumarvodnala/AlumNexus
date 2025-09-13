@@ -1,8 +1,9 @@
 // Alumni/PostResource.jsx
 import React, { useState } from "react";
-import { FaFileUpload, FaCheckCircle, FaCopy } from "react-icons/fa";
+import { FaFileUpload, FaCheckCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../../context/ThemeProvider";
+import axios from "axios"; // ✅ Added axios
 
 export default function PostResource() {
   const { darkMode } = useTheme();
@@ -38,14 +39,40 @@ export default function PostResource() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!branch || !subject || !bookName || !file) {
       setError("❌ Fill all fields and select a valid file.");
       return;
     }
-    setSuccess(true); // Show success toast
-    setTimeout(() => setSuccess(false), 4000); // Hide after 4s
-    setBranch(""); setSubject(""); setBookName(""); setFile(null); setEmojiReaction(""); setError("");
+
+    try {
+      const formData = new FormData();
+      formData.append("branch", branch);
+      formData.append("subject", subject);
+      formData.append("bookName", bookName);
+      formData.append("file", file);
+
+      // ✅ API call (replace with your backend endpoint)
+      const res = await axios.post("http://localhost:5000/api/resources", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      console.log("Upload success:", res.data);
+
+      setSuccess(true); // Show success toast
+      setTimeout(() => setSuccess(false), 4000);
+
+      // Reset fields
+      setBranch("");
+      setSubject("");
+      setBookName("");
+      setFile(null);
+      setEmojiReaction("");
+      setError("");
+    } catch (err) {
+      console.error("Upload failed:", err);
+      setError("❌ Upload failed. Please try again.");
+    }
   };
 
   const copyLink = () => {
@@ -54,7 +81,11 @@ export default function PostResource() {
   };
 
   return (
-    <div className={`${darkMode ? "bg-gray-900 text-white" : "bg-[#F9FAFB] text-gray-900"} min-h-screen flex justify-center p-8`}>
+    <div
+      className={`${
+        darkMode ? "bg-gray-900 text-white" : "bg-[#F9FAFB] text-gray-900"
+      } min-h-screen flex justify-center p-8`}
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -65,8 +96,16 @@ export default function PostResource() {
       >
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
-          <FaFileUpload className={`text-3xl ${darkMode ? "text-yellow-400" : "text-[#0D9488]"}`} />
-          <h2 className={`text-3xl font-bold ${darkMode ? "text-white" : "text-gray-900"}`}>
+          <FaFileUpload
+            className={`text-3xl ${
+              darkMode ? "text-yellow-400" : "text-[#0D9488]"
+            }`}
+          />
+          <h2
+            className={`text-3xl font-bold ${
+              darkMode ? "text-white" : "text-gray-900"
+            }`}
+          >
             Share Your Resource
           </h2>
         </div>
@@ -79,7 +118,9 @@ export default function PostResource() {
             value={branch}
             onChange={(e) => setBranch(e.target.value)}
             className={`w-full p-3 rounded-lg border transition ${
-              darkMode ? "border-gray-700 bg-gray-800 text-white placeholder-gray-400" : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
+              darkMode
+                ? "border-gray-700 bg-gray-800 text-white placeholder-gray-400"
+                : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
             }`}
           />
           <input
@@ -88,7 +129,9 @@ export default function PostResource() {
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
             className={`w-full p-3 rounded-lg border transition ${
-              darkMode ? "border-gray-700 bg-gray-800 text-white placeholder-gray-400" : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
+              darkMode
+                ? "border-gray-700 bg-gray-800 text-white placeholder-gray-400"
+                : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
             }`}
           />
           <input
@@ -97,7 +140,9 @@ export default function PostResource() {
             value={bookName}
             onChange={(e) => setBookName(e.target.value)}
             className={`w-full p-3 rounded-lg border transition ${
-              darkMode ? "border-gray-700 bg-gray-800 text-white placeholder-gray-400" : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
+              darkMode
+                ? "border-gray-700 bg-gray-800 text-white placeholder-gray-400"
+                : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
             }`}
           />
         </div>
@@ -106,17 +151,32 @@ export default function PostResource() {
         <label
           htmlFor="fileUpload"
           className={`flex flex-col items-center justify-center w-full p-10 border-2 border-dashed rounded-2xl cursor-pointer transition-colors duration-300 ${
-            darkMode ? "border-gray-700 hover:border-yellow-300" : "border-gray-300 hover:border-[#8B5CF6]"
+            darkMode
+              ? "border-gray-700 hover:border-yellow-300"
+              : "border-gray-300 hover:border-[#8B5CF6]"
           }`}
         >
-          <FaFileUpload className={`text-5xl mb-4 ${darkMode ? "text-yellow-400" : "text-[#0D9488]"}`} />
-          <span className={`font-semibold ${darkMode ? "text-white" : "text-gray-700"}`}>
+          <FaFileUpload
+            className={`text-5xl mb-4 ${
+              darkMode ? "text-yellow-400" : "text-[#0D9488]"
+            }`}
+          />
+          <span
+            className={`font-semibold ${
+              darkMode ? "text-white" : "text-gray-700"
+            }`}
+          >
             Click or Drag & Drop to Upload
           </span>
-          <input type="file" id="fileUpload" className="hidden" onChange={handleFileChange} />
+          <input
+            type="file"
+            id="fileUpload"
+            className="hidden"
+            onChange={handleFileChange}
+          />
         </label>
 
-        {/* Preview / Error / Emoji */}
+        {/* Preview / Error */}
         <AnimatePresence>
           {file && (
             <motion.div
@@ -173,7 +233,7 @@ export default function PostResource() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigator.clipboard.writeText("https://example.com/resource-link")}
+            onClick={copyLink}
             className={`flex-1 py-4 rounded-2xl font-bold text-lg shadow-xl transition-all duration-300 ${
               darkMode
                 ? "bg-gray-700 text-yellow-400 hover:bg-yellow-300"
@@ -213,13 +273,26 @@ export default function PostResource() {
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.95 }}
                 className={`w-full max-w-3xl p-8 rounded-3xl shadow-2xl border ${
-                  darkMode ? "bg-gray-900 border-gray-700 text-white" : "bg-white border-gray-300 text-gray-900"
+                  darkMode
+                    ? "bg-gray-900 border-gray-700 text-white"
+                    : "bg-white border-gray-300 text-gray-900"
                 }`}
               >
-                <h3 className="text-2xl font-bold mb-4">{bookName || "Resource Name"}</h3>
-                <p className="mb-2"><span className="font-semibold">Branch:</span> {branch || "N/A"}</p>
-                <p className="mb-2"><span className="font-semibold">Subject:</span> {subject || "N/A"}</p>
-                <p className="mb-2"><span className="font-semibold">File:</span> {file?.name || "N/A"}</p>
+                <h3 className="text-2xl font-bold mb-4">
+                  {bookName || "Resource Name"}
+                </h3>
+                <p className="mb-2">
+                  <span className="font-semibold">Branch:</span>{" "}
+                  {branch || "N/A"}
+                </p>
+                <p className="mb-2">
+                  <span className="font-semibold">Subject:</span>{" "}
+                  {subject || "N/A"}
+                </p>
+                <p className="mb-2">
+                  <span className="font-semibold">File:</span>{" "}
+                  {file?.name || "N/A"}
+                </p>
 
                 <button
                   onClick={() => setPreviewOpen(false)}

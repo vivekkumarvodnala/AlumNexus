@@ -33,8 +33,8 @@ export default function InterviewExperiences() {
   };
 
   return (
-    <div className="min-h-screen bg-bg dark:bg-accent px-6 py-8">
-      <h1 className="text-2xl font-bold text-accent dark:text-gray-100 mb-6">
+    <div className="min-h-screen px-6 py-8 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <h1 className="text-2xl font-bold text-[#1F2937] dark:text-white mb-6">
         Interview Experiences
       </h1>
 
@@ -42,10 +42,10 @@ export default function InterviewExperiences() {
         {experiences.map((exp) => (
           <div
             key={exp.id}
-            className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-5 hover:shadow-md transition"
+            className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition p-5 hover:scale-[1.02] duration-300"
           >
             {/* Title */}
-            <h2 className="font-bold text-lg text-accent dark:text-gray-100">
+            <h2 className="font-bold text-lg text-[#1F2937] dark:text-white mb-2">
               {exp.title}
             </h2>
 
@@ -54,26 +54,27 @@ export default function InterviewExperiences() {
               <img
                 src={`https://i.pravatar.cc/150?img=${exp.id + 30}`}
                 alt={exp.author}
-                className="w-8 h-8 rounded-full"
+                className="w-8 h-8 rounded-full border border-gray-200 dark:border-yellow-400"
               />
-              <span className="font-semibold text-accent dark:text-gray-200">
+              <span className="font-semibold text-[#1F2937] dark:text-white">
                 {exp.author}
               </span>
-              <span className="text-gray-500 dark:text-gray-400">
+              <span className="text-gray-500 dark:text-yellow-400">
                 {exp.batch}
               </span>
-              {exp.verified && <Shield className="w-4 h-4 text-yellow-500" />}
+              {exp.verified && <Shield className="w-4 h-4 text-yellow-400" />}
             </div>
 
             {/* Content */}
-            <p className="text-sm text-accent/80 dark:text-gray-300 mb-4">
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
               {exp.content}
             </p>
 
             {/* Actions */}
             <button
               onClick={() => speak(exp.content)}
-              className="flex items-center gap-2 px-4 py-2 bg-secondary text-white rounded-lg text-sm hover:bg-violet-700 transition"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition 
+                bg-[#8B5CF6] text-white hover:bg-[#7C3AED] dark:bg-yellow-400 dark:text-gray-900 dark:hover:bg-yellow-300"
             >
               <Volume2 className="w-4 h-4" />
               Listen
