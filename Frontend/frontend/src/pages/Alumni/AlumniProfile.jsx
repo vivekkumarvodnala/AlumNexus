@@ -1,91 +1,116 @@
-// Alumni/ProfilePage.jsx
-import React from "react";
-import { FaUserGraduate, FaBuilding, FaBriefcase, FaLinkedin, FaEnvelope } from "react-icons/fa";
+// Alumni/ManageProfile.jsx
+import React, { useState, useEffect } from "react";
+import { FaUserEdit } from "react-icons/fa";
+import axios from "axios";
+import { useTheme } from "../../context/ThemeProvider";
 
-export default function ProfilePage() {
-  const alumni = {
-    name: "SakarwalBalaji",
-    batch: "CSE - 2025",
-    company: "Google",
-    role: "Software Engineer",
-    email: "balaji@example.com",
-    linkedin: "https://linkedin.com/in/balaji",
-    bio: "Passionate about building scalable systems and mentoring juniors. Experienced in full-stack development and interview prep guidance.",
-    skills: ["React", "Node.js", "MongoDB", "XGBoost", "System Design"],
+export default function ManageProfile() {
+  const { darkMode } = useTheme();
+  const [profile, setProfile] = useState({
+    name: "",
+    batch: "",
+    company: "",
+    role: "",
+  });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data } = await axios.get("/api/alumni/profile"); // Replace with your endpoint
+        setProfile(data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const handleChange = (e) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
   };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await axios.put("/api/alumni/profile", profile); // Replace with your endpoint
+      alert("Profile saved successfully!");
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      alert("Failed to save profile.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const theme = {
+    light: {
+      bg: "bg-white",
+      text: "text-[#1F2937]",
+      border: "border-gray-300",
+      focusRing: "focus:ring-[#0D9488]",
+      icon: "text-[#0D9488]",
+      buttonBg: "bg-[#0D9488]",
+      buttonHover: "hover:bg-[#059669]",
+      buttonText: "text-white",
+    },
+    dark: {
+      bg: "bg-gray-900",
+      text: "text-white",
+      border: "border-gray-700",
+      focusRing: "focus:ring-yellow-400",
+      icon: "text-yellow-400",
+      buttonBg: "bg-yellow-400",
+      buttonHover: "hover:bg-yellow-300",
+      buttonText: "text-gray-900",
+    },
+  };
+
+  const t = darkMode ? theme.dark : theme.light;
+
+  if (loading) {
+    return (
+      <div className={`flex justify-center items-center min-h-screen ${t.text}`}>
+        Loading profile...
+      </div>
+    );
+  }
 
   return (
     <div
-      className={`min-h-screen p-8 transition-colors duration-300 
-        bg-[#F9FAFB] text-[#1F2937] dark:bg-gray-900 dark:text-gray-100`}
+      className={`${t.bg} ${t.text} p-6 rounded-2xl shadow-md border ${t.border} transition-colors duration-300`}
     >
-      {/* Profile Header */}
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-        <div className="flex flex-col md:flex-row items-center gap-6">
-          {/* Avatar */}
-          <div className="w-28 h-28 rounded-full bg-gradient-to-tr from-[#0D9488] to-[#8B5CF6] flex items-center justify-center text-white text-4xl font-bold shadow-lg">
-            {alumni.name.charAt(0)}
-          </div>
+      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+        <FaUserEdit className={`${t.icon}`} />
+        Manage Profile
+      </h2>
 
-          {/* Info */}
-          <div className="flex-1">
-            <h1 className="text-3xl font-semibold">{alumni.name}</h1>
-            <p className="text-gray-600 dark:text-gray-400">{alumni.batch}</p>
+      <form className="grid gap-4">
+        {["name", "batch", "company", "role"].map((field) => (
+          <input
+            key={field}
+            name={field}
+            placeholder={`Enter ${field}`}
+            value={profile[field]}
+            onChange={handleChange}
+            className={`p-3 rounded-lg border ${t.border} outline-none ${t.bg} ${t.text} focus:ring-2 ${t.focusRing} transition`}
+          />
+        ))}
 
-            <div className="flex flex-wrap gap-4 mt-3 text-sm">
-              <span className="flex items-center gap-2">
-                <FaBuilding className="text-[#0D9488] dark:text-[#8B5CF6]" />
-                {alumni.company}
-              </span>
-              <span className="flex items-center gap-2">
-                <FaBriefcase className="text-[#0D9488] dark:text-[#8B5CF6]" />
-                {alumni.role}
-              </span>
-            </div>
-
-            <div className="flex gap-4 mt-4">
-              <a
-                href={`mailto:${alumni.email}`}
-                className="flex items-center gap-2 px-4 py-2 bg-[#0D9488] dark:bg-[#8B5CF6] text-white rounded-lg shadow hover:opacity-90 transition"
-              >
-                <FaEnvelope /> Email
-              </a>
-              <a
-                href={alumni.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-2 px-4 py-2 border border-[#0D9488] dark:border-[#8B5CF6] text-[#0D9488] dark:text-[#8B5CF6] rounded-lg hover:bg-[#0D9488] hover:text-white dark:hover:bg-[#8B5CF6] dark:hover:text-white transition"
-              >
-                <FaLinkedin /> LinkedIn
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bio & Skills */}
-      <div className="max-w-4xl mx-auto mt-8 grid md:grid-cols-3 gap-6">
-        {/* Bio */}
-        <div className="md:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
-          <h2 className="text-xl font-semibold mb-3">About</h2>
-          <p className="text-gray-600 dark:text-gray-400">{alumni.bio}</p>
-        </div>
-
-        {/* Skills */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
-          <h2 className="text-xl font-semibold mb-3">Skills</h2>
-          <div className="flex flex-wrap gap-2">
-            {alumni.skills.map((skill, idx) => (
-              <span
-                key={idx}
-                className="px-3 py-1 text-sm rounded-full bg-[#0D9488]/10 text-[#0D9488] dark:bg-[#8B5CF6]/20 dark:text-[#8B5CF6] font-medium"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={saving}
+          className={`px-4 py-2 rounded-lg transition font-semibold ${t.buttonBg} ${t.buttonText} ${t.buttonHover} ${
+            saving ? "opacity-60 cursor-not-allowed" : ""
+          }`}
+        >
+          {saving ? "Saving..." : "Save Profile"}
+        </button>
+      </form>
     </div>
   );
 }

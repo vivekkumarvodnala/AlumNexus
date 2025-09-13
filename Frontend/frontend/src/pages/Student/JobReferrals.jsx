@@ -3,7 +3,6 @@ import React from "react";
 import { MessageCircle, Bookmark, Shield } from "lucide-react";
 
 export default function JobReferrals() {
-  // Dummy job referral posts
   const jobs = [
     {
       id: 1,
@@ -26,8 +25,8 @@ export default function JobReferrals() {
   ];
 
   return (
-    <div className="min-h-screen bg-bg dark:bg-accent px-6 py-8">
-      <h1 className="text-2xl font-bold text-accent dark:text-gray-200 mb-6">
+    <div className="min-h-screen px-6 py-8 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <h1 className="text-2xl font-bold text-[#1F2937] dark:text-white mb-6">
         Job Referrals
       </h1>
 
@@ -35,25 +34,25 @@ export default function JobReferrals() {
         {jobs.map((job) => (
           <div
             key={job.id}
-            className="bg-white dark:bg-accent border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-5 hover:shadow-md transition"
+            className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-md transition p-5 flex flex-col justify-between hover:scale-[1.02] duration-300"
           >
             {/* Header */}
-            <h2 className="font-bold text-lg text-accent dark:text-gray-100">
+            <h2 className="font-bold text-lg text-[#1F2937] dark:text-white mb-2">
               {job.title}
             </h2>
             <div className="flex items-center gap-2 text-sm mb-3">
               <img
                 src={`https://i.pravatar.cc/150?img=${job.id + 20}`}
                 alt={job.author}
-                className="w-8 h-8 rounded-full border border-gray-200 dark:border-gray-700"
+                className="w-8 h-8 rounded-full border border-gray-200 dark:border-yellow-400"
               />
-              <span className="font-semibold text-accent dark:text-gray-200">
+              <span className="font-semibold text-[#1F2937] dark:text-white">
                 {job.author}
               </span>
-              <span className="text-gray-500 dark:text-gray-400">
+              <span className="text-gray-500 dark:text-yellow-400">
                 {job.batch}
               </span>
-              {job.verified && <Shield className="w-4 h-4 text-yellow-500" />}
+              {job.verified && <Shield className="w-4 h-4 text-yellow-400" />}
             </div>
 
             {/* Tags */}
@@ -61,11 +60,11 @@ export default function JobReferrals() {
               {job.tags.map((tag, idx) => (
                 <span
                   key={idx}
-                  className={`px-2 py-1 rounded-full text-xs ${
-                    tag === "Job"
-                      ? "bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary"
-                      : "bg-secondary/10 text-secondary dark:bg-secondary/20 dark:text-secondary"
-                  }`}
+                  className={`px-2 py-1 text-xs rounded-full font-medium 
+                    ${tag === "Job"
+                      ? "bg-teal-100 text-[#0D9488] dark:bg-yellow-400/20 dark:text-yellow-400"
+                      : "bg-purple-100 text-[#8B5CF6] dark:bg-yellow-400/10 dark:text-yellow-400"
+                    }`}
                 >
                   {tag}
                 </span>
@@ -73,16 +72,16 @@ export default function JobReferrals() {
             </div>
 
             {/* Snippet */}
-            <p className="text-sm text-accent/80 dark:text-gray-300 mb-4">
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
               {job.snippet}
             </p>
 
             {/* Actions */}
-            <div className="flex gap-6 text-gray-500 dark:text-gray-400 text-sm">
-              <div className="flex items-center gap-1 hover:text-primary cursor-pointer">
+            <div className="flex gap-6 text-sm">
+              <div className="flex items-center gap-1 cursor-pointer hover:text-[#0D9488] dark:hover:text-yellow-300 transition">
                 <MessageCircle className="w-4 h-4" /> 8
               </div>
-              <div className="flex items-center gap-1 hover:text-primary cursor-pointer">
+              <div className="flex items-center gap-1 cursor-pointer hover:text-[#0D9488] dark:hover:text-yellow-300 transition">
                 <Bookmark className="w-4 h-4" /> 3
               </div>
             </div>
