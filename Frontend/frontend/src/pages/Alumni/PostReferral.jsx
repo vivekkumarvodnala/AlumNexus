@@ -10,6 +10,8 @@ import {
   FaFileUpload,
 } from "react-icons/fa";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify"; // ✅ Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // ✅ Import CSS
 
 export default function PostReferral() {
   const [referral, setReferral] = useState({
@@ -41,7 +43,8 @@ export default function PostReferral() {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      alert("Referral posted successfully!");
+      toast.success("✅ Referral posted successfully!"); // ✅ Success Toast
+
       setReferral({
         company: "",
         role: "",
@@ -55,11 +58,10 @@ export default function PostReferral() {
       setPreview(false);
     } catch (err) {
       console.error(err);
-      alert("Error posting referral. Try again.");
+      toast.error("❌ Error posting referral. Try again."); // ✅ Error Toast
     }
   };
 
-  // ✅ Ensure preview only works if required fields are filled
   const isValidForPreview =
     referral.company.trim() &&
     referral.role.trim() &&
@@ -67,6 +69,9 @@ export default function PostReferral() {
 
   return (
     <div className="w-full max-w-2xl mx-auto bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg p-8 transition-colors duration-300">
+      {/* ✅ Toast Container */}
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+
       {/* Header */}
       <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-center text-[#0D9488] dark:text-yellow-400">
         <FaBriefcase className="text-[#0D9488] dark:text-yellow-400" />
@@ -75,7 +80,6 @@ export default function PostReferral() {
 
       {/* === Show Preview OR Form === */}
       {preview && isValidForPreview ? (
-        // ✅ Preview Card (instead of form)
         <div className="mt-6 p-4 border rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900">
           <h3 className="text-lg font-semibold text-[#0D9488] dark:text-yellow-400">
             {referral.role} at {referral.company}
@@ -121,7 +125,6 @@ export default function PostReferral() {
           </div>
         </div>
       ) : (
-        // ✅ Form
         <form onSubmit={handleSubmit} className="grid gap-5">
           {/* Company */}
           <div className="flex items-center gap-3 border-b pb-2 border-gray-300 dark:border-gray-600">

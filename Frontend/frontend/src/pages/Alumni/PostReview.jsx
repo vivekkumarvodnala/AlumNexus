@@ -16,7 +16,28 @@ export default function PostCompanyReview() {
   const [submitted, setSubmitted] = useState(false);
 
   const maxWords = 200;
-  const wordCount = review.trim() === "" ? 0 : review.trim().split(/\s+/).length;
+
+  // ✅ Safe word count (ignores trailing spaces)
+  const wordCount =
+    review.trim() === ""
+      ? 0
+      : review
+          .trim()
+          .split(/\s+/)
+          .filter(Boolean).length;
+
+  // ✅ Block typing after 200 words
+  const handleReviewChange = (e) => {
+    const text = e.target.value;
+    const words =
+      text.trim() === ""
+        ? []
+        : text.trim().split(/\s+/).filter(Boolean);
+
+    if (words.length <= maxWords) {
+      setReview(text);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!companyName.trim()) {
@@ -24,7 +45,7 @@ export default function PostCompanyReview() {
       return;
     }
     if (rating === 0 || wordCount === 0 || wordCount > maxWords) {
-      alert("Please provide a valid rating and review (max 200 words).");
+      alert(`Please provide a valid rating and review (max ${maxWords} words).`);
       return;
     }
 
@@ -33,6 +54,7 @@ export default function PostCompanyReview() {
       setSubmitted(true);
       confetti({ particleCount: 120, spread: 70, origin: { y: 0.7 } });
 
+      // reset fields
       setCompanyName("");
       setReview("");
       setRating(0);
@@ -100,8 +122,10 @@ export default function PostCompanyReview() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-3xl font-bold mb-4">Share Your Experience</h2>
+        {/* ✅ Updated heading */}
+        <h2 className="text-3xl font-bold mb-4">Share Your Review</h2>
 
+        {/* Company Name */}
         <div className="flex flex-col gap-2">
           <label className="font-semibold text-lg">
             Company Name <span className="text-red-500">*</span>
@@ -115,41 +139,43 @@ export default function PostCompanyReview() {
           />
         </div>
 
+        {/* Rating */}
         <div className="flex items-center gap-2">
           {renderStars()}
           <span className="ml-2 font-semibold">{rating} / 5</span>
         </div>
 
+        {/* Review */}
         <textarea
           rows="6"
           value={review}
-          onChange={(e) => setReview(e.target.value)}
+          onChange={handleReviewChange}
           placeholder="Write your review (max 200 words)..."
           className={`w-full p-6 rounded-2xl border ${border} outline-none text-lg resize-none ${themeBg} ${themeText}`}
         />
 
+        {/* Word Counter */}
         <div className="flex justify-end text-sm font-medium opacity-70">
           {wordCount}/{maxWords} words
         </div>
 
-      <motion.button
-  onClick={handleSubmit}
-  disabled={!companyName || rating === 0 || wordCount === 0 || wordCount > maxWords}
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
-  className={`flex items-center justify-center gap-3 px-10 py-4 font-bold rounded-2xl shadow-xl transition
-    ${
-      !companyName || rating === 0 || wordCount === 0 || wordCount > maxWords
-        ? "cursor-not-allowed bg-gray-400 text-white"
-        : darkMode
-        ? "bg-yellow-400 hover:bg-yellow-300 text-gray-900"
-        : "bg-[#0D9488] hover:bg-[#8B5CF6] text-white"
-    }`}
->
-  <FaPaperPlane /> Submit Review
-</motion.button>
+        {/* Submit Button */}
+        <motion.button
+          onClick={handleSubmit}
+          disabled={!companyName || rating === 0 || wordCount === 0 || wordCount > maxWords}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={`flex items-center justify-center gap-3 px-10 py-4 font-bold rounded-2xl shadow-xl transition
+            ${
+              !companyName || rating === 0 || wordCount === 0 || wordCount > maxWords
+                ? "cursor-not-allowed bg-gray-400 text-white"
+                : btnBg
+            }`}
+        >
+          <FaPaperPlane /> Submit Review
+        </motion.button>
 
-
+        {/* Success Toast */}
         <AnimatePresence>
           {submitted && (
             <motion.div

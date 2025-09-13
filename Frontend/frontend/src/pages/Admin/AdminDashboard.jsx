@@ -1,60 +1,130 @@
 // src/components/Dashboard.jsx
-import React from "react";
-import AnalyticsDashboard from "./AnalyticsDashboard";
-import ContentModeration from "./ContentModeration";
-import { FaChartLine, FaExclamationCircle, FaUserGraduate, FaUsers } from "react-icons/fa";
-import { useTheme } from "../../context/ThemeProvider"; // updated path
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  FaChartLine,
+  FaExclamationCircle,
+  FaUserGraduate,
+  FaUsers,
+  FaFileUpload,
+  FaCalendarAlt,
+} from "react-icons/fa";
+import { useTheme } from "../../context/ThemeProvider";
 
-// Theme Toggle Component
-const ThemeToggle = () => {
-  const { darkMode, setDarkMode } = useTheme();
-  return (
-    <button
-      onClick={() => setDarkMode(!darkMode)}
-      className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-teal-700 transition"
-    >
-      {darkMode ? "Light Mode" : "Dark Mode"}
-    </button>
-  );
-};
-
-// Quick Stats Card
-const StatCard = ({ title, value, icon, gradient }) => (
+const StatCard = ({ title, value, icon, gradient, darkMode }) => (
   <div
-    className={`bg-gradient-to-r ${gradient} text-white rounded-2xl shadow-xl p-6 flex items-center justify-between transform hover:scale-105 transition duration-300`}
+    className={`rounded-2xl shadow-xl p-6 flex items-center justify-between transform transition duration-300 border cursor-pointer hover:scale-105`}
+    style={{ background: gradient }}
   >
     <div>
-      <p className="text-sm opacity-90">{title}</p>
-      <p className="text-3xl font-bold">{value}</p>
+      <p
+        className={`text-sm opacity-90 ${
+          darkMode ? "text-white/80" : "text-[#1F2937]"
+        }`}
+      >
+        {title}
+      </p>
+      <p
+        className={`text-3xl font-bold ${
+          darkMode ? "text-white" : "text-[#1F2937]"
+        }`}
+      >
+        {value}
+      </p>
     </div>
-    {icon}
+    <div
+      className={`text-4xl ${
+        darkMode
+          ? "text-yellow-400 transition-colors duration-300 hover:text-yellow-300"
+          : "text-[#0D9488] transition-colors duration-300 hover:text-[#8B5CF6]"
+      }`}
+    >
+      {icon}
+    </div>
   </div>
 );
 
 export default function AdminDashboard() {
   const { darkMode } = useTheme();
 
-  const themeClasses = darkMode ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900";
+  const themeBg = darkMode ? "bg-gray-900" : "bg-[#F9FAFB]";
+  const themeText = darkMode ? "text-white" : "text-[#1F2937]";
 
-  const stats = [
-    { title: "Total Alumni", value: "1,245", icon: <FaUserGraduate className="w-10 h-10 opacity-90" />, gradient: "from-primary to-teal-500" },
-    { title: "Registered Students", value: "3,420", icon: <FaUsers className="w-10 h-10 opacity-90" />, gradient: "from-secondary to-purple-600" },
-    { title: "Analytics Reports", value: "5", icon: <FaChartLine className="w-10 h-10 opacity-90" />, gradient: "from-primary to-emerald-600" },
-    { title: "Moderation Tasks", value: "12", icon: <FaExclamationCircle className="w-10 h-10 opacity-90" />, gradient: "from-secondary to-indigo-600" },
+  const [stats, setStats] = useState([
+    {
+      title: "Total Alumni",
+      value: "0",
+      icon: <FaUserGraduate />,
+      gradient: darkMode
+        ? "linear-gradient(90deg,#44403C,#6B21A8)"
+        : "linear-gradient(90deg,#0D9488,#14B8A6)",
+    },
+    {
+      title: "Registered Students",
+      value: "0",
+      icon: <FaUsers />,
+      gradient: darkMode
+        ? "linear-gradient(90deg,#78350F,#CA8A04)"
+        : "linear-gradient(90deg,#8B5CF6,#C084FC)",
+    },
+    {
+      title: "Analytics Reports",
+      value: "0",
+      icon: <FaChartLine />,
+      gradient: darkMode
+        ? "linear-gradient(90deg,#5B21B6,#FACC15)"
+        : "linear-gradient(90deg,#0D9488,#059669)",
+    },
+    {
+      title: "Moderation Tasks",
+      value: "0",
+      icon: <FaExclamationCircle />,
+      gradient: darkMode
+        ? "linear-gradient(90deg,#78350F,#FBBF24)"
+        : "linear-gradient(90deg,#8B5CF6,#7C3AED)",
+    },
+  ]);
+
+  const events = [
+    { title: "Alumni Meetup", content: "Scheduled for 25th September" },
+    { title: "Webinar on AI", content: "Join on 30th September" },
   ];
 
-  const cardBg = darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-200";
-  const cardText = darkMode ? "text-gray-100" : "text-gray-700";
+  const resources = [
+    { title: "Interview Prep Notes", content: "Shared by senior alumni" },
+    { title: "Project Repository", content: "Full-stack projects uploaded" },
+  ];
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get("/api/stats"); // Replace with your API
+        const data = response.data;
+
+        setStats([
+          { ...stats[0], value: data.totalAlumni || stats[0].value },
+          { ...stats[1], value: data.registeredStudents || stats[1].value },
+          { ...stats[2], value: data.analyticsReports || stats[2].value },
+          { ...stats[3], value: data.moderationTasks || stats[3].value },
+        ]);
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      }
+    };
+
+    fetchStats();
+  }, []); // Run once on mount
 
   return (
-    <div className={`p-6 min-h-screen transition-colors duration-500 ${themeClasses}`}>
+    <div className={`${themeBg} ${themeText} p-6 min-h-screen transition-colors duration-500`}>
       {/* Header */}
       <header className="mb-10 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-2">
-          <FaChartLine className="text-primary" />
-          AlumNexus Dashboard
+          <FaChartLine
+            className={darkMode ? "text-yellow-400" : "text-[#0D9488]"}
+          />{" "}
+          Admin Dashboard
         </h1>
-        <ThemeToggle />
       </header>
 
       {/* Stats Grid */}
@@ -66,34 +136,44 @@ export default function AdminDashboard() {
             value={stat.value}
             icon={stat.icon}
             gradient={stat.gradient}
+            darkMode={darkMode}
           />
         ))}
       </div>
 
-      {/* Analytics Section */}
-      <div className="mb-10">
-        <AnalyticsDashboard />
-      </div>
+      {/* Events & Resources */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {events.map((event, i) => (
+          <div
+            key={i}
+            className={`p-6 rounded-2xl shadow-md border transition-colors duration-300 cursor-pointer ${
+              darkMode
+                ? "bg-gray-800 border-gray-700 text-white hover:bg-gray-700"
+                : "bg-white border-gray-200 text-[#1F2937] hover:bg-[#E0F2F1]"
+            }`}
+          >
+            <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
+              <FaCalendarAlt /> {event.title}
+            </h3>
+            <p>{event.content}</p>
+          </div>
+        ))}
 
-      {/* Content Moderation Section */}
-      <div className="mb-10">
-        <ContentModeration />
-      </div>
-
-      {/* Optional Additional Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-        <div className={`p-6 rounded-2xl shadow-md border transition-colors duration-500 ${cardBg}`}>
-          <h3 className={`text-xl font-bold text-primary mb-2`}>Upcoming Events</h3>
-          <p className={`${cardText}`}>
-            Alumni meetups, webinars, and workshops scheduled for this month.
-          </p>
-        </div>
-        <div className={`p-6 rounded-2xl shadow-md border transition-colors duration-500 ${cardBg}`}>
-          <h3 className={`text-xl font-bold text-primary mb-2`}>New Resources</h3>
-          <p className={`${cardText}`}>
-            Interview prep notes, practice questions, and mentorship guidelines shared by alumni.
-          </p>
-        </div>
+        {resources.map((res, i) => (
+          <div
+            key={i}
+            className={`p-6 rounded-2xl shadow-md border transition-colors duration-300 cursor-pointer ${
+              darkMode
+                ? "bg-gray-800 border-gray-700 text-white hover:bg-gray-700"
+                : "bg-white border-gray-200 text-[#1F2937] hover:bg-[#E0F2F1]"
+            }`}
+          >
+            <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
+              <FaFileUpload /> {res.title}
+            </h3>
+            <p>{res.content}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
