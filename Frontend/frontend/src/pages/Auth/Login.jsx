@@ -54,7 +54,7 @@ export default function Login() {
        login(res.data._id,res.data.name, res.data.role, res.data.token);
       //  user(res.data);
         // redirect
-        navigate(`/${res.data.role}-dashboard`);
+        navigate(`/${res.data.role}/${res.data.role}-profile`);
       } catch (err) {
         console.error(err);
         alert(

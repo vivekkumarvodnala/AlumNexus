@@ -25,6 +25,8 @@ import RoleConversion from "./pages/Admin/RoleConversion";
 import UserManagement from "./pages/Admin/UserManagement";
 
 // Student Pages
+import StudentProfile from "./pages/Student/StudentProfile";
+import UpdateProfile from "./pages/Student/UpdateProfile";
 import StudentDashboard from "./pages/Student/StudentDashboard";
 import AlumniDirectory from "./pages/Student/AlumniDirectory";
 import JobReferrals from "./pages/Student/JobReferrals";
@@ -48,7 +50,7 @@ import PostReferral from "./pages/Alumni/PostReferral";
 import PostResource from "./pages/Alumni/PostResource";
 import PostStory from "./pages/Alumni/PostStory";
 import CreateInterview from "./pages/Alumni/createInterview";
-import MySlots from "./pages/Alumni/MySlots"
+import MySlots from "./pages/Alumni/MySlots";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -86,13 +88,15 @@ function App() {
               <Route path="/register" element={<Register />} />
 
               {/* Admin Routes */}
-              <Route path="/admin/analytics-dashboard" element={<AnalyticsDashboard />} />
+              <Route path="/admin/admin-profile" element={<AnalyticsDashboard />} />
               <Route path="/admin/content-moderation" element={<ContentModeration />} />
               <Route path="/admin/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/admin/role-conversion" element={<RoleConversion />} />
               <Route path="/admin/user-management" element={<UserManagement />} />
 
               {/* Student Routes */}
+              <Route path="/student/student-profile" element={<StudentProfile />} />
+              <Route path="/student/update-profile" element={<UpdateProfile />} />
               <Route path="/student/student-dashboard" element={<StudentDashboard />} />
               <Route path="/student/alumni-directory" element={<AlumniDirectory />} />
               <Route path="/student/job-referrals" element={<JobReferrals />} />
@@ -114,7 +118,7 @@ function App() {
               <Route path="/alumni/post-review" element={<PostReview />} />
               <Route path="/alumni/upload-podcast" element={<UploadPodcast />} />
               <Route path="/alumni/alumni-dashboard" element={<AlumniDashboard />} />
-              <Route path="/alumni/alumni-profile-page" element={<AlumniProfile />}/>
+              <Route path="/alumni/alumni-profile" element={<AlumniProfile />}/>
               <Route path="/alumni/manage-profile" element={<ManageProfile />} />
               <Route path="/alumni/post-experience" element={<PostExperience />} />
               <Route path="/alumni/post-referral" element={<PostReferral />} />

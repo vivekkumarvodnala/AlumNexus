@@ -1,6 +1,6 @@
 // src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
-
+import {useNavigate} from "react-router-dom"
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const storedToken = localStorage.getItem("token");
   const storedName = localStorage.getItem("name");
   const storedRole = localStorage.getItem("role");
-
+  
   // initialize immediately from localStorage
   const [user, setUser] = useState(
     storedToken && storedName && storedRole
@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     setUser(null);
     setToken(null);
+    
   };
 
   return (

@@ -53,7 +53,7 @@ export default function Register() {
         console.log("Register success:", res.data);
 
         // Redirect to dashboard or login
-        navigate(`/${res.data.role}dashboard`);
+        navigate("/login");
       } catch (err) {
         console.error("Register error:", err.response?.data || err.message);
         setErrors({ api: err.response?.data?.message || "Registration failed" });

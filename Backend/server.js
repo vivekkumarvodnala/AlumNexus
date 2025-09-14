@@ -21,7 +21,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/interviews", require("./routes/interviewRoutes"));    
+app.use("/api/interviews", require("./routes/interviewRoutes")); 
+app.use("/api/users", require("./routes/userRoutes"));
+
 
 // Podcast routes
 app.use("/api/podcasts", require("./routes/podcastRoutes"));

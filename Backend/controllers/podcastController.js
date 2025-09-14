@@ -59,10 +59,10 @@ const getPublicPodcasts = async (req, res) => {
 const getPodcastsByAlumni = async (req, res) => {
   try {
     const alumniId = req.params.id;
-    console.log("Fetching podcasts for alumni:", alumniId);
+    // console.log("Fetching podcasts for alumni:", alumniId);
 
     const podcasts = await Podcast.find({ alumni: alumniId }).sort({ createdAt: -1 });
-    console.log(podcasts);
+    // console.log(podcasts);
     if (!podcasts || podcasts.length === 0) {
       return res.status(404).json({ message: "No podcasts found for this alumni" });
     }

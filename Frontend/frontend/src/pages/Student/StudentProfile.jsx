@@ -157,6 +157,16 @@ export default function StudentProfile() {
       </div>
     </div>
 
+    {/* Stats / Bar-style display */}
+    <div className="mt-4">
+      <h3 className="text-gray-700 dark:text-gray-200 font-semibold mb-2">Spends most time on:</h3>
+      {["Product Infrastructure", "Network Security", "Security Testing", "Security Audit Outsourcing", "Bugs"].map((task, idx) => (
+        <div key={idx} className="flex items-center gap-2 mb-2">
+          <div className="bg-[#900000] dark:bg-yellow-400 h-2 rounded-full flex-1"></div>
+          <span className="text-gray-700 dark:text-gray-200 text-sm">{task}</span>
+        </div>
+      ))}
+    </div>
 
     {/* Team members */}
     <div>

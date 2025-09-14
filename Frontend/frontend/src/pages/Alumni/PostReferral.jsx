@@ -75,7 +75,7 @@ export default function PostReferral() {
   return (
     <div className="w-full max-w-2xl mx-auto bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg p-8 transition-colors duration-300">
       {/* ✅ Toast Container */}
-      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+      {/* <ToastContainer position="top-right" autoClose={3000} theme="colored" /> */}
 
       {/* Header */}
       <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-center text-[#0D9488] dark:text-yellow-400">

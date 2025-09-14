@@ -1,5 +1,14 @@
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
-import { FaHome, FaUsers, FaChalkboardTeacher, FaUserShield } from "react-icons/fa";
+import {
+  FaHome,
+  FaUsers,
+  FaChalkboardTeacher,
+  FaUserShield,
+  FaBriefcase,
+  FaCheckCircle,
+  FaBook,
+  FaComments,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 
@@ -8,9 +17,7 @@ function Footer() {
 
   return (
     <footer className="bg-primary dark:bg-gray-900 text-white dark:text-white transition-colors duration-300 border-t border-gray-400 dark:border-gray-700">
-     {/* max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 */}
       <div className="flex align-center justify-between p-4 gap-10 items-start border-b border-gray-300 dark:border-gray-700">
-        
         {/* === Brand Section === */}
         <div className="text-center md:text-left">
           <h2 className="text-2xl font-bold">🎓 Alumnexus</h2>
@@ -24,85 +31,122 @@ function Footer() {
         <div className="text-center">
           <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
           <div className="flex flex-col space-y-2 text-sm">
+            {/* Public (not logged in) */}
             {!user ? (
               <>
                 <Link
-                  to="/"
+                  // to="/"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
                   <FaHome className="dark:text-yellow-400" /> Home
                 </Link>
                 <Link
-                  to="/about"
+                  // to="/podcasts"
+                  className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
+                >
+                  <FaCheckCircle className="dark:text-yellow-400" /> Podcasts
+                </Link>
+                <Link
+                  // to="/mock-interviews"
+                  className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
+                >
+                  <FaChalkboardTeacher className="dark:text-yellow-400" /> Mock Interviews
+                </Link>
+                <Link
+                  // to="/community"
+                  className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
+                >
+                  <FaUsers className="dark:text-yellow-400" /> Community
+                </Link>
+                <Link
+                  // to="/about"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
                   <FaUsers className="dark:text-yellow-400" /> About
-                </Link>
-                <Link
-                  to="/community"
-                  className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
-                >
-                  <FaChalkboardTeacher className="dark:text-yellow-400" /> Community
                 </Link>
               </>
             ) : user.role === "student" ? (
               <>
                 <Link
-                  to="/student/dashboard"
+                  // to="/student/dashboard"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
                   <FaHome className="dark:text-yellow-400" /> Dashboard
                 </Link>
                 <Link
-                  to="/student/alumni-directory"
+                  // to="/student/student-profile"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
-                  <FaUsers className="dark:text-yellow-400" /> Alumni Directory
+                  <FaUsers className="dark:text-yellow-400" /> Profile
                 </Link>
                 <Link
-                  to="/student/mock-interviews"
+                  // to="/student/job-referrals"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
-                  <FaChalkboardTeacher className="dark:text-yellow-400" /> Mock Interviews
+                  <FaBriefcase className="dark:text-yellow-400" /> Job Referrals
+                </Link>
+                <Link
+                  // to="/student/resource-bank"
+                  className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
+                >
+                  <FaBook className="dark:text-yellow-400" /> Resources
+                </Link>
+                <Link
+                  // to="/student/chat-alumni"
+                  className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
+                >
+                  <FaComments className="dark:text-yellow-400" /> Chat Alumni
                 </Link>
               </>
             ) : user.role === "alumni" ? (
               <>
                 <Link
-                  to="/alumni/dashboard"
+                  // to="/alumni/alumni-dashboard"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
                   <FaHome className="dark:text-yellow-400" /> Dashboard
                 </Link>
                 <Link
-                  to="/alumni/post-referral"
+                  // to="/alumni/manage-profile"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
-                  <FaUsers className="dark:text-yellow-400" /> Post Referral
+                  <FaUsers className="dark:text-yellow-400" /> Profile
                 </Link>
                 <Link
-                  to="/alumni/post-experience"
+                  // to="/alumni/post-referral"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
-                  <FaChalkboardTeacher className="dark:text-yellow-400" /> Share Experience
+                  <FaBriefcase className="dark:text-yellow-400" /> Post Referral
+                </Link>
+                <Link
+                  // to="/alumni/upload-podcast"
+                  className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
+                >
+                  <FaBook className="dark:text-yellow-400" /> Upload Podcast
+                </Link>
+                <Link
+                  // to="/alumni/chat-students"
+                  className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
+                >
+                  <FaComments className="dark:text-yellow-400" /> Chat Students
                 </Link>
               </>
             ) : user.role === "admin" ? (
               <>
                 <Link
-                  to="/admin/dashboard"
+                  // to="/admin/dashboard"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
                   <FaUserShield className="dark:text-yellow-400" /> Admin Dashboard
                 </Link>
                 <Link
-                  to="/admin/user-management"
+                  // to="/admin/user-management"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
                   <FaUsers className="dark:text-yellow-400" /> User Management
                 </Link>
                 <Link
-                  to="/admin/analytics"
+                  // to="/admin/analytics-dashboard"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
                   <FaChalkboardTeacher className="dark:text-yellow-400" /> Analytics
@@ -143,7 +187,8 @@ function Footer() {
 
       {/* === Bottom Bar === */}
       <div className="py-4 text-center text-sm text-gray-300 dark:text-gray-500 border-t border-gray-400 dark:border-gray-700">
-        © {new Date().getFullYear()} <span className="font-semibold">Alumnexus</span>. All Rights Reserved.
+        © {new Date().getFullYear()}{" "}
+        <span className="font-semibold">Alumnexus</span>. All Rights Reserved.
       </div>
     </footer>
   );
