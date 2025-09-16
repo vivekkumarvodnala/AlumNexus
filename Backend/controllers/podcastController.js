@@ -1,14 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const Podcast = require("../models/Podcast");
-const OpenAI = require("openai");
-
-// Setup OpenAI client
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
-// ===== Upload Podcast + Transcription =====
-exports.uploadPodcast = async (req, res) => {
-  console.log(req.file)
+const User = require("../models/User");
+const uploadPodcast = async (req, res) => {
   try {
     const { title, description, alumni, isPublic } = req.body;
 
