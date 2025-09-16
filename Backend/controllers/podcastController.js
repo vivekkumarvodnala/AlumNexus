@@ -8,6 +8,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // ===== Upload Podcast + Transcription =====
 exports.uploadPodcast = async (req, res) => {
+  console.log(req.file)
   try {
     const { title, description, alumni, isPublic } = req.body;
 

@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api", // backend base URL
+  baseURL: "http://localhost:8000/api", // backend base URL
 });
 
 // Add token to headers automatically if present
@@ -35,3 +35,4 @@ export const updateInterview = (id, data) =>
 
 // 📍 Delete a slot (alumni only)
 export const deleteInterview = (id) => API.delete(`/interviews/${id}`);
+

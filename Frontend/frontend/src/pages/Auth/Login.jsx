@@ -41,10 +41,9 @@ export default function Login() {
       try {
         setLoading(true);
 
-        const res = await axios.post("http://localhost:5000/api/auth/login", {
-          email: form.email,
-          password: form.password,
-        });
+        const res = await axios.post("http://localhost:8000/api/auth/login", 
+          { email: form.email, password: form.password },
+        );
 
         // save JWT token
       //   localStorage.setItem("token", res.data.token);
