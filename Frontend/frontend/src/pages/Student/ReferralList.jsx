@@ -8,7 +8,7 @@ export default function ReferralList() {
   useEffect(() => {
     const fetchReferrals = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/referrals", {
+        const res = await axios.get("http://localhost:8000/api/referrals", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         setReferrals(res.data);
@@ -59,7 +59,7 @@ export default function ReferralList() {
 
               {r.file && (
                 <a
-                  href={`http://localhost:5000/uploads/referrals/${r.file}`}
+                  href={`http://localhost:8000/uploads/referrals/${r.file}`}
                   target="_blank"
                   rel="noreferrer"
                   className="block mt-2 text-xs text-gray-500 dark:text-gray-400 hover:underline"

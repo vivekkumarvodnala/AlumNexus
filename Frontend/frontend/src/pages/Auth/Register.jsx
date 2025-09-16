@@ -1,22 +1,22 @@
-// src/pages/Auth/Register.jsx
-import React, { useState } from "react";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
-import { Link, useNavigate } from "react-router-dom";
-import { User, Mail, Lock, UserPlus } from "lucide-react";
-import axios from "axios";
+  // src/pages/Auth/Register.jsx
+  import React, { useState } from "react";
+  import Input from "../../components/Input";
+  import Button from "../../components/Button";
+  import { Link, useNavigate } from "react-router-dom";
+  import { User, Mail, Lock, UserPlus } from "lucide-react";
+  import axios from "axios";
 
-export default function Register() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirm: "",
-    role: "student",
-  });
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  export default function Register() {
+    const [form, setForm] = useState({
+      name: "",
+      email: "",
+      password: "",
+      confirm: "",
+      role: "student",
+    });
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
   function validate() {
     const e = {};

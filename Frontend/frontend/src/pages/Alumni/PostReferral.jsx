@@ -43,7 +43,7 @@ export default function PostReferral() {
       Object.entries(referral).forEach(([k, v]) => formData.append(k, v));
       if (file) formData.append("file", file);
       console.log(localStorage.getItem("token"));
-      await axios.post("http://localhost:5000/api/referrals", formData, {
+      await axios.post("http://localhost:8000/api/referrals", formData, {
         headers: { "Content-Type": "multipart/form-data" },
           Authorization: `Bearer ${localStorage.getItem("token")}`,
       });

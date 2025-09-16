@@ -81,7 +81,7 @@ function UploadPodcast() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/podcasts/upload",
+        "http://localhost:8000/api/podcasts/upload",
         data,
         {
           headers: {

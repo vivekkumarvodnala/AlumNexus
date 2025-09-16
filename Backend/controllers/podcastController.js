@@ -4,6 +4,9 @@ const path = require("path");
 const Podcast = require("../models/Podcast");
 const User = require("../models/User");
 
+// ===== Upload Podcast + Transcription =====
+exports.uploadPodcast = async (req, res) => {
+  console.log(req.file)
 // ===== Upload Podcast =====
 const uploadPodcast = async (req, res) => {
   try {
