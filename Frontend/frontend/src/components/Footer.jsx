@@ -92,7 +92,7 @@ function Footer() {
                   <FaBook className="dark:text-yellow-400" /> Resources
                 </Link>
                 <Link
-                  // to="/student/chat-alumni"
+                  // to="/student/chat-alumn/:id"
                   className="flex items-center justify-center md:justify-start gap-2 dark:text-white dark:hover:text-yellow-300"
                 >
                   <FaComments className="dark:text-yellow-400" /> Chat Alumni

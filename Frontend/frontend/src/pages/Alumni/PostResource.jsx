@@ -68,7 +68,6 @@ export default function PostResource() {
 
     setSuccess(true);
     setTimeout(() => setSuccess(false), 4000);
-
     // Clear form
     setBranch("");
     setSubject("");

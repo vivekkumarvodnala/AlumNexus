@@ -6,6 +6,7 @@ const {
   getUserProfile,
   updateUserProfile,
   deleteUser,
+  getAllUsers,
 } = require("../controllers/userController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -23,6 +24,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Profile routes
+router.get('/allUsers',getAllUsers);
 router.get("/get-profile", protect, getUserProfile);
 router.put("/update-profile", protect, upload.single("image"), updateUserProfile);
 

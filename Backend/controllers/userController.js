@@ -82,8 +82,20 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+// Get all users
+const getAllUsers = async (req, res) => {
+  try {
+    console.log(req.body);
+    const users = await User.find({}, '_id name role'); // only needed fields
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
   deleteUser,
+  getAllUsers,
 };

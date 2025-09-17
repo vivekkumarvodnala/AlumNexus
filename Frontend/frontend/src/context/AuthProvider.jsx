@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
+  const storedId = localStorage.getItem("id");
   const storedToken = localStorage.getItem("token");
   const storedName = localStorage.getItem("name");
   const storedRole = localStorage.getItem("role");
@@ -12,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   // initialize immediately from localStorage
   const [user, setUser] = useState(
     storedToken && storedName && storedRole
-      ? { name: storedName, role: storedRole }
+      ? {id:storedId, name: storedName, role: storedRole }
       : null
   );
   const [token, setToken] = useState(storedToken || null);
@@ -53,7 +54,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     
   };
-
+  
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
