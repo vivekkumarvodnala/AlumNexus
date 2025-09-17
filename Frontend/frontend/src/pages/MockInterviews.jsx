@@ -14,7 +14,7 @@ export default function MockInterviews() {
   useEffect(() => {
     const fetchInterviews = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/interviews");
+        const res = await axios.get("http://localhost:8000/api/interviews");
         setInterviews(res.data);
       } catch (err) {
         console.error("Error fetching interviews:", err);
@@ -29,7 +29,7 @@ export default function MockInterviews() {
   const bookInterview = async (id) => {
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/interviews/${id}/book`,
+        `http://localhost:8000/api/interviews/${id}/book`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

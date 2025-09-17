@@ -124,7 +124,7 @@ function Navbar() {
       icon: <FaBook className="dark:text-yellow-400" />,
     },
     {
-      to: "/student/chat-alumni",
+      to: "/users",
       label: "Chat Alumni",
       icon: <FaComments className="dark:text-yellow-400" />,
     },
@@ -172,13 +172,18 @@ function Navbar() {
       icon: <FaBook className="dark:text-yellow-400" />,
     },
     {
-      to: "/alumni/chat-students",
+      to: "/users",
       label: "Chat Students",
       icon: <FaComments className="dark:text-yellow-400" />,
     },
     {
       to: "/alumni/my-podcasts",
       label: "MyPodcasts",
+      icon: <FaCheckCircle className="dark:text-yellow-400" />,
+    },
+    {
+      to: "/alumni/my-slots",
+      label: "MyInterviews",
       icon: <FaCheckCircle className="dark:text-yellow-400" />,
     },
     {
@@ -304,7 +309,7 @@ function Navbar() {
                 More <span className="ml-1">{moreOpen ? "▲" : "▼"}</span>
               </button>
               {moreOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-gray-900 text-white rounded-md shadow-lg py-2 z-50">
+                <div className="absolute right-0 mt-2 w-48 bg-primary dark:bg-gray-900 text-white rounded-md shadow-lg py-2 z-50">
                   {moreLinks.map((link) => (
                     <Link
                       key={link.to}
@@ -359,7 +364,7 @@ function Navbar() {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-gray-900 shadow-lg transform transition-transform duration-300 z-50 ${
+        className={`fixed top-0 left-0 h-full w-64 bg-primary dark:bg-gray-900 shadow-lg transform transition-transform duration-300 z-50 ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -380,7 +385,7 @@ function Navbar() {
               {link.icon} {link.label}
             </Link>
           ))}
-
+          
           {user && (
             <button
               onClick={handleLogout}

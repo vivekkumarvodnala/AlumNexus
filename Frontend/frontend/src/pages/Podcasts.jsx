@@ -20,7 +20,7 @@ function Podcasts() {
     const fetchPodcasts = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/podcasts/public"
+          "http://localhost:8000/api/podcasts/public"
         );
         setPodcasts(res.data);
       } catch (error) {
@@ -125,7 +125,7 @@ function Podcasts() {
                         onEnded={() => setActiveIndex(null)}
                       >
                         <source
-                          src={`http://localhost:5000${podcast.audioUrl}`}
+                          src={`http://localhost:8000${podcast.audioUrl}`}
                           type="audio/mp3"
                         />
                         Your browser does not support the audio element.

@@ -53,7 +53,7 @@ export default function PostResource() {
       formData.append("file", file);
 
       // ✅ API call (replace with your backend endpoint)
-      const res = await axios.post("http://localhost:5000/api/resources", formData, {
+      const res = await axios.post("http://localhost:8000/api/resources", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

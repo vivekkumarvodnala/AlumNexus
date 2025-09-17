@@ -38,6 +38,7 @@ import ResourceBank from "./pages/Student/ResourceBank";
 import StudentAlumniProfile from "./pages/Student/StudentAlumniProfile";
 import MyBookings from "./pages/Student/MyBookings"
 import ReferralList from "./pages/Student/ReferralList"
+import Users from "./pages/Student/Users"
 //Alumni Pages<Route
 import MyPodcasts from "./pages/Alumni/MyPodcasts";
 import PostReview from "./pages/Alumni/PostReview";
@@ -51,6 +52,7 @@ import PostResource from "./pages/Alumni/PostResource";
 import PostStory from "./pages/Alumni/PostStory";
 import CreateInterview from "./pages/Alumni/createInterview";
 import MySlots from "./pages/Alumni/MySlots";
+import Chat from "./pages/Alumni/Chat";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -104,11 +106,10 @@ function App() {
               <Route path="/student/interview-experiences" element={<InterviewExperiences />} />
               <Route path="/student/mock-interviews" element={<MockInterviews />} />
               <Route path="/student/company-reviews" element={<CompanyReviews />} /> 
-              <Route path="/student/chat-alumni" element={<ChatAlumni />} />
               <Route path="/student/success-stories" element={<SuccessStories />} />
               <Route path="/student/resource-bank" element={<ResourceBank />} />
-               <Route path="/student/my-bookings" element={<MyBookings />} />
-               <Route path="/student/referrals" element={<ReferralList />} />
+              <Route path="/student/my-bookings" element={<MyBookings />} />
+              <Route path="/student/referrals" element={<ReferralList />} />
 
               
 
@@ -126,6 +127,10 @@ function App() {
               <Route path="/alumni/post-story" element={<PostStory />} />
               <Route path="/alumni/create-interview" element={<CreateInterview />} />
                <Route path="/alumni/my-slots" element={<MySlots />} />
+
+               {/* chat */}
+              <Route path="/users" element={<Users />} />
+              <Route path="/chat/:id" element={<Chat />} />
             </Routes>
           </main>
         </div>

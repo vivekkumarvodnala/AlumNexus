@@ -22,7 +22,7 @@ export default function CreateInterview() {
     try {
       const token = localStorage.getItem("token");
       console.log(token);
-      await axios.post("http://localhost:5000/api/interviews/", form, {
+      await axios.post("http://localhost:8000/api/interviews/", form, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Interview slot created!");

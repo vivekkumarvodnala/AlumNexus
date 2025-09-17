@@ -2,7 +2,11 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
+const http = require("http");
 const connectDB = require("./config/db");
+
+const messageRoutes = require("./routes/messages");
+const initSocket = require("./socket");
 
 // Load environment variables
 dotenv.config();
@@ -23,20 +27,21 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/interviews", require("./routes/interviewRoutes")); 
 app.use("/api/users", require("./routes/userRoutes"));
-
-
-// Podcast routes
 app.use("/api/podcasts", require("./routes/podcastRoutes"));
 app.use("/api/referrals", require("./routes/referralRoutes"));
-
+app.use("/api/messages", messageRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
   res.send("Hello from the Server.js");
 });
 
+// SOCKET.IO
+const server = http.createServer(app);
+initSocket(server);
+
 // Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 8000;
+server.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
