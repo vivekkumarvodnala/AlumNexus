@@ -29,7 +29,7 @@ export default function StudentProfile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/users/get-profile", {
+        const res = await axios.get("http://localhost:8000/api/users/get-profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFormData(res.data); // populate formData state
@@ -64,7 +64,7 @@ export default function StudentProfile() {
       data.append("phone", formData.phone);
 
       const res = await axios.put(
-        "http://localhost:5000/api/users/update-profile",
+        "http://localhost:8000/api/users/update-profile",
         data,
         {
           headers: {
@@ -98,7 +98,7 @@ export default function StudentProfile() {
       <img
         src={
           formData.image
-            ? `http://localhost:5000${formData.image}`
+            ? `http://localhost:8000${formData.image}`
             : "https://www.w3schools.com/w3images/avatar2.png"
         }
         alt="Profile"

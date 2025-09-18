@@ -1,24 +1,28 @@
 const Resource = require("../models/Resources");
 
 const postResource = async (req, res) => {
+  console.log("req.body:", req.body);
+  console.log("req.file:", req.file);
+  console.log("req.user:", req.user);
+
   try {
-    if (!req.file) {
-      return res.status(400).json({ message: "File is required" });
-    }
+    if (!req.file) return res.status(400).json({ message: "File is required" });
 
     const resource = new Resource({
       branch: req.body.branch,
       subject: req.body.subject,
       bookName: req.body.bookName,
       file: req.file.filename,
-      uploadedBy: req.user?._id || null, // if using auth middleware
+      uploadedBy: req.user?._id || null,
     });
 
-    await resource.save();
-    res.status(201).json(resource);
+    const saved = await resource.save();
+    console.log("Saved resource:", saved);
+
+    res.status(201).json(saved);
   } catch (err) {
-    console.error("❌ Error uploading resource:", err);
-    res.status(500).json({ message: "Error uploading resource", error: err.message });
+    console.error(err);
+    res.status(500).json({ message: err.message });
   }
 };
 

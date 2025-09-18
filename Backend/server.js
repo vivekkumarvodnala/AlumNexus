@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/db");
-
+const resourceRoutes = require("./routes/resourceRoutes");
 // Load environment variables
 dotenv.config();
 
@@ -26,6 +26,7 @@ app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
+app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/interviews", require("./routes/interviewRoutes"));    
 
@@ -33,6 +34,8 @@ app.use("/api/interviews", require("./routes/interviewRoutes"));
 app.use("/api/podcasts", require("./routes/podcastRoutes"));
 app.use("/api/referrals", require("./routes/referralRoutes"));
 
+app.use("/api/resources", resourceRoutes);
+app.use("/uploads/resources", express.static("uploads/resources"));
 
 // Test Route
 app.get("/", (req, res) => {

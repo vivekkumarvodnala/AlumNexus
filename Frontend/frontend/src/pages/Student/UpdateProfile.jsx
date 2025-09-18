@@ -18,7 +18,7 @@ export default function UpdateProfile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/users/get-profile", {
+        const res = await axios.get("http://localhost:8000/api/users/get-profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFormData({
@@ -26,7 +26,7 @@ export default function UpdateProfile() {
           phone: res.data.phone,
           image: res.data.image,
         });
-        setPreview(res.data.image ? `http://localhost:5000${res.data.image}` : null);
+        setPreview(res.data.image ? `http://localhost:8000${res.data.image}` : null);
       } catch (err) {
         console.error("❌ Error fetching profile:", err.response?.data || err);
       } finally {
@@ -61,7 +61,7 @@ export default function UpdateProfile() {
       if (formData.image instanceof File) data.append("image", formData.image);
 
       const res = await axios.put(
-        "http://localhost:5000/api/users/update-profile",
+        "http://localhost:8000/api/users/update-profile",
         data,
         {
           headers: {
@@ -77,7 +77,7 @@ export default function UpdateProfile() {
         phone: res.data.phone,
         image: res.data.image,
       });
-      setPreview(res.data.image ? `http://localhost:5000${res.data.image}` : null);
+      setPreview(res.data.image ? `http://localhost:8000${res.data.image}` : null);
     } catch (err) {
       console.error("❌ Error updating profile:", err.response?.data || err);
       alert("Failed to update profile.");

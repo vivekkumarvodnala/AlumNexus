@@ -35,7 +35,7 @@ export default function UserManagement() {
   // Fetch users from API (fallback to mock if API fails)
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/users") // replace with your API endpoint
+      .get("http://localhost:8000/api/users") // replace with your API endpoint
       .then((res) => {
         if (res.data && res.data.length > 0) {
           setUsers(res.data);
@@ -79,7 +79,7 @@ export default function UserManagement() {
       )
     );
     axios
-      .patch(`http://localhost:5000/api/users/${id}/toggle-active`)
+      .patch(`http://localhost:8000/api/users/${id}/toggle-active`)
       .catch((err) => console.error("Failed to update active status", err));
   };
 
@@ -88,7 +88,7 @@ export default function UserManagement() {
       prev.map((user) => (user.id === id ? { ...user, role: newRole } : user))
     );
     axios
-      .patch(`http://localhost:5000/api/users/${id}/role`, { role: newRole })
+      .patch(`http://localhost:8000/api/users/${id}/role`, { role: newRole })
       .catch((err) => console.error("Failed to update role", err));
   };
 

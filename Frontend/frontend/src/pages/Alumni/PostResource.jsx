@@ -38,15 +38,48 @@ export default function PostResource() {
     }
   };
 
-  const handleSubmit = () => {
-    if (!branch || !subject || !bookName || !file) {
-      setError("❌ Fill all fields and select a valid file.");
-      return;
+ const handleSubmit = async () => {
+  if (!branch || !subject || !bookName || !file) {
+    setError("❌ Fill all fields and select a valid file.");
+    return;
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append("branch", branch);
+    formData.append("subject", subject);
+    formData.append("bookName", bookName);
+    formData.append("file", file); // MUST match Multer's key
+    // Add token if your API is protected
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:8000/api/resources", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.message || "Upload failed");
     }
-    setSuccess(true); // Show success toast
-    setTimeout(() => setSuccess(false), 4000); // Hide after 4s
-    setBranch(""); setSubject(""); setBookName(""); setFile(null); setEmojiReaction(""); setError("");
-  };
+
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 4000);
+
+    // Clear form
+    setBranch("");
+    setSubject("");
+    setBookName("");
+    setFile(null);
+    setEmojiReaction("");
+    setError("");
+  } catch (err) {
+    setError(err.message);
+  }
+};
 
   const copyLink = () => {
     navigator.clipboard.writeText("https://example.com/resource-link");
